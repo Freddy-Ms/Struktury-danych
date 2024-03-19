@@ -52,19 +52,32 @@ void DynamicT::print() {
     cout << endl;
 }
 void DynamicT::removefirst() {
+    if(size > 0){
     for (int i = 0; i < size; i++) {
         arr[i] = arr[i+1];
     }
-    size--;
+    size--;}
+    else{
+        cout << "Array is empty" << endl;
+    }
 }
 void DynamicT::removelast() {
+    if(size > 0){
     size--;
+    }
+    else{
+        cout << "Array is empty" << endl;
+    }
 }
 void DynamicT::removemiddle(int n) {
+    if(size>0 && n<size){
     for (int i = n; i < size; i++) {
         arr[i] = arr[i+1];
     }
-    size--;
+    size--;}
+    else{
+        cout << "Array is empty or index is out of range" << endl;
+    }
 }
 void DynamicT::checkvalue(int n) {
     for (int i = 0; i < size; i++) {
