@@ -66,3 +66,12 @@ void DynamicT::removemiddle(int n) {
     }
     size--;
 }
+void DynamicT::checkvalue(int n) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == n) {
+            cout << "Value found at index " << i << endl;
+            return;
+        }
+    }
+    cout << "Value not found" << endl;
+}

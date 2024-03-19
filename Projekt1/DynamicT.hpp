@@ -12,6 +12,7 @@ class DynamicT {
         void removefirst();
         void removelast();
         void removemiddle(int);
+        void checkvalue(int);
         void print();
     private:
         int *arr;
