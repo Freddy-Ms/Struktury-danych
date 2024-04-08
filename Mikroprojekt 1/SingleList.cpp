@@ -5,7 +5,7 @@
 using namespace std;
 
 template <typename T>
-class SingeList : public Template<T> {
+class SingleList : public Template<T> {
 private:
     struct Node {
         T data;
@@ -16,12 +16,12 @@ private:
     Node* tail;
     size_t length;
 public:
-    SingeList(){
+    SingleList(){
         head = nullptr;
         tail = nullptr;
         length = 0;
     }
-    virtual ~SingeList(){
+    virtual ~SingleList(){
         Node* temp = head;
         while(temp != nullptr){
             Node* next = temp->next;
@@ -152,15 +152,18 @@ public:
         cout << endl;
     }
 
-    virtual void readFromFile(string filename) override{
-        ifstream file(filename);
-        if(!file.is_open()){
+    virtual void readFromFile(string filename, int size) override{
+        ifstream file;
+        file.open(filename);
+        if(!file){
             cout << "File not found" << endl;
             return;
         }
         T element;
-        while(file >> element){
+        int i = 0;
+        while(file >> element && i < size){
             addLast(element);
+            i++;
         }
         file.close();
     }

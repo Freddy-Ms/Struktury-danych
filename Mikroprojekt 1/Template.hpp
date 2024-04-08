@@ -60,7 +60,7 @@ class Template {
     /*
         Read data from a file
     */
-    virtual void readFromFile(string filename) = 0;
+    virtual void readFromFile(string filename, int size) = 0;
 
     /*
         Check if the list contains a specific element

@@ -14,6 +14,7 @@ class HeadList : public Template<T> {
         };
         Node* head;
         size_t length;
+        Node* tailonlytoloaddata;
     public:
     HeadList(){
         head = nullptr;
@@ -31,14 +32,25 @@ class HeadList : public Template<T> {
     
     virtual void addLast(T element) override{
         Node* newNode = new Node(element);
-        if(!head)   head = newNode;
+        if(!head) head = newNode;
         else{
             Node* temp = head;
             while(temp->next)
                 temp = temp->next;
             temp->next = newNode;}
         length++;}
-
+  void addLastLoadFromFile(T element) {
+        Node* newNode = new Node(element);
+        if(!head) {
+            head = newNode;
+            tailonlytoloaddata = newNode;
+        }
+        else{
+            tailonlytoloaddata->next = newNode;
+            tailonlytoloaddata = newNode;
+        }
+        length++;
+    }
     virtual void addFirst(T element) override{
         Node* newNode = new Node(element, head);
         head = newNode;
@@ -133,17 +145,21 @@ class HeadList : public Template<T> {
             temp = temp->next;}
         cout << endl;}
 
-    virtual void readFromFile(string filename) override{
-        ifstream file(filename);
-        if(!file.is_open()){
+    virtual void readFromFile(string filename, int size) override{
+        ifstream file;
+        file.open(filename);
+        if(!file){
             cout << "File not found" << endl;
             return;
         }
         T element;
-        while(file >> element)
-            addLast(element);
-        file.close();}
-
+        int i = 0;
+        while(file >> element && i < size){
+            addLastLoadFromFile(element);
+            i++;
+        }
+        file.close();
+    }
     virtual bool contains(const T& element) override{
         Node* temp = head;
         while(temp){

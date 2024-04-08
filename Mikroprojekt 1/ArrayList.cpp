@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "Template.hpp"
+#pragma once
 using namespace std;
 
 
@@ -106,7 +107,7 @@ class ArrayList : public Template<T> {
         cout << endl;
     }
 
-    virtual void readFromFile(string filename) override{
+    virtual void readFromFile(string filename, int size) override{
         ifstream file;
         file.open(filename);
         if(!file){
@@ -114,8 +115,10 @@ class ArrayList : public Template<T> {
             return;
         }
         T element;
-        while(file >> element){
+        int i = 0;
+        while(file >> element && i < size){
             addLast(element);
+            i++;
         }
         file.close();
     }

@@ -152,15 +152,18 @@ public:
         cout << endl;
     }
 
-    virtual void readFromFile(string filename) override{
-        ifstream file(filename);
-        if(!file.is_open()){
+    virtual void readFromFile(string filename, int size) override{
+        ifstream file;
+        file.open(filename);
+        if(!file){
             cout << "File not found" << endl;
             return;
         }
         T element;
-        while(file >> element){
+        int i = 0;
+        while(file >> element && i < size){
             addLast(element);
+            i++;
         }
         file.close();
     }
