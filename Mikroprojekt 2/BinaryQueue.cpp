@@ -35,11 +35,11 @@ class BinaryHeap : public Queue<T>
         int left = 2 * index + 1;
         int right = 2 * index + 2;
         int smallest = index;
-        if((left < actualsize && HeapArr[left].priority < HeapArr[index].priority) || 
-        (HeapArr[left].priority == HeapArr[index].priority && HeapArr[left].data < HeapArr[index].data))
+        if(left < actualsize && (HeapArr[left].priority < HeapArr[index].priority || 
+        (HeapArr[left].priority == HeapArr[index].priority && HeapArr[left].data < HeapArr[index].data)))
             smallest = left;
-        if((right < actualsize && HeapArr[right].priority < HeapArr[smallest].priority) ||
-        (HeapArr[right].priority == HeapArr[smallest].priority && HeapArr[right].data < HeapArr[smallest].data))
+        if(right < actualsize && (HeapArr[right].priority < HeapArr[smallest].priority ||
+        (HeapArr[right].priority == HeapArr[smallest].priority && HeapArr[right].data < HeapArr[smallest].data)))
             smallest = right;
         if(smallest != index)
         {
@@ -69,9 +69,9 @@ class BinaryHeap : public Queue<T>
         HeapifyUp(actualsize);
         actualsize++;
     }
-    virtual T& getHighest() override{
+    virtual T getHighest() override{
         if(isEmpty()) throw "Queue is empty";
-        T& temp = HeapArr[0].data;
+        T temp = HeapArr[0].data;
         HeapArr[0] = HeapArr[actualsize - 1];
         actualsize--;
         HeapifyDown(0);
@@ -118,7 +118,7 @@ class BinaryHeap : public Queue<T>
                     HeapArr[i].priority = newPriority;
                     HeapifyUp(i);
                 }
-                return;
+               
             }
         }
         if(!found)

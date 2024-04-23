@@ -1,4 +1,5 @@
 #include<iostream>
+#pragma once
 using namespace std;
 
 template <typename T>
@@ -8,7 +9,7 @@ class Queue {
     // Adding element with specific priority
     virtual void add(T element, int priority) = 0;
     // Removing element with the highest priority
-    virtual T& getHighest() = 0;
+    virtual T getHighest() = 0;
     // Getting size of our queue
     virtual void getSize() = 0;
     // Peeking what is first in our queue
