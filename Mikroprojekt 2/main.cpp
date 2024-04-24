@@ -18,12 +18,8 @@ int main(){
     list.add(10, 10);
     list.add(0,1);
     list.add(4,1);
-    list.printData();
-    list.printPriority();
-   // list.Modify(5, 1);
-   // list.Modify(1, 10);
-    list.Modify(4, 100);
-    list.printData();
-    list.printPriority();
+    list.Modify(10, 1);
+    list.add(11, 11);
+    list.printData();  
    
 }

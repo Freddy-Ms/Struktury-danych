@@ -20,7 +20,7 @@ class ListQueue : public Queue<T>
         int actualsize;
         void repair(){
             Node* node = head;
-            while(node->next != nullptr && (node->priority > node->next->priority || (node->priority == node->next->priority && node->data > node->next->data))){
+            while(node->next != nullptr && node->priority >= node->next->priority){
                 swap(node->data, node->next->data);
                 swap(node->priority, node->next->priority);
                 node = node->next;
@@ -28,14 +28,15 @@ class ListQueue : public Queue<T>
         }
         void repairForward(Node* start){
             Node* node = start;
-            while((node->next != nullptr && node->priority > node->next->priority) || (node->priority == node->next->priority && node->data > node->next->data)){
+            while(node->next != nullptr && node->priority >= node->next->priority){
                 swap(node->data, node->next->data);
                 swap(node->priority, node->next->priority);
                 node = node->next;
-            }}
+            }
+        }
         void repairBackward(Node* start){
             Node* node = start;
-            while((node->prev != nullptr && node->priority < node->prev->priority) || (node->priority == node->prev->priority && node->data < node->prev->data)){
+            while(node->prev != nullptr && node->priority < node->prev->priority){
                 swap(node->data, node->prev->data);
                 swap(node->priority, node->prev->priority);
                 node = node->prev;
@@ -120,21 +121,11 @@ class ListQueue : public Queue<T>
                     node->priority = newPriority;
                     Node* temp = node;
                     repairForward(temp);
-                    repairBackward(temp);
-               // while(temp->next != nullptr && (temp->priority > temp->next->priority || (temp->priority == temp->next->priority && temp->data > temp->next->data))){
-               // swap(temp->data, temp->next->data);
-              //  swap(temp->priority, temp->next->priority);
-               // temp = temp->next;}
                     }
                 else if(node->priority > newPriority){
                     node->priority = newPriority;
                     Node* temp = node;
                     repairBackward(temp);
-                    repairForward(temp);
-                 //   while(temp->prev != nullptr && (temp->priority < temp->prev->priority || (temp->priority == temp->prev->priority && temp->data < temp->prev->data))){
-               // swap(temp->data, temp->prev->data);
-               // swap(temp->priority, temp->prev->priority);
-               // temp = temp->prev;}
                }
                 }
             node = node->next;

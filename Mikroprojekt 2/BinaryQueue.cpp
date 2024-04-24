@@ -20,8 +20,7 @@ class BinaryHeap : public Queue<T>
     void HeapifyUp(int index)
     {
         int parent = (index - 1) / 2;
-        while((index >= 0 && HeapArr[parent].priority > HeapArr[index].priority) ||
-        (HeapArr[parent].priority == HeapArr[index].priority && HeapArr[parent].data > HeapArr[index].data)){
+        while(index >= 0 && HeapArr[parent].priority > HeapArr[index].priority){
             {
                 swap(HeapArr[parent], HeapArr[index]);
                 index = parent;
@@ -35,11 +34,9 @@ class BinaryHeap : public Queue<T>
         int left = 2 * index + 1;
         int right = 2 * index + 2;
         int smallest = index;
-        if(left < actualsize && (HeapArr[left].priority < HeapArr[index].priority || 
-        (HeapArr[left].priority == HeapArr[index].priority && HeapArr[left].data < HeapArr[index].data)))
+        if(left < actualsize && HeapArr[left].priority < HeapArr[index].priority)
             smallest = left;
-        if(right < actualsize && (HeapArr[right].priority < HeapArr[smallest].priority ||
-        (HeapArr[right].priority == HeapArr[smallest].priority && HeapArr[right].data < HeapArr[smallest].data)))
+        if(right < actualsize && HeapArr[right].priority < HeapArr[smallest].priority)
             smallest = right;
         if(smallest != index)
         {
