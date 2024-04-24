@@ -26,7 +26,7 @@ class ListQueue : public Queue<T>
                 node = node->next;
             }
         }
-        void repairForward(Node* start){
+        void PushToBack(Node* start){
             Node* node = start;
             while(node->next != nullptr && node->priority >= node->next->priority){
                 swap(node->data, node->next->data);
@@ -34,7 +34,7 @@ class ListQueue : public Queue<T>
                 node = node->next;
             }
         }
-        void repairBackward(Node* start){
+        void PushToFront(Node* start){
             Node* node = start;
             while(node->prev != nullptr && node->priority < node->prev->priority){
                 swap(node->data, node->prev->data);
@@ -120,12 +120,12 @@ class ListQueue : public Queue<T>
                 if(node->priority < newPriority){
                     node->priority = newPriority;
                     Node* temp = node;
-                    repairForward(temp);
+                    PushToBack(temp);
                     }
                 else if(node->priority > newPriority){
                     node->priority = newPriority;
                     Node* temp = node;
-                    repairBackward(temp);
+                    PushToFront(temp);
                }
                 }
             node = node->next;
@@ -168,5 +168,31 @@ class ListQueue : public Queue<T>
         if(tail == nullptr)
             throw runtime_error("Queue is empty");
         cout << "Last element in our queue is: " << tail->data << endl;
+    }
+    T GetAt(int index){
+        if(index == 1)
+            return getHighest();
+        if(index == actualsize)
+            return getLast();
+        Node* toDelete = head; 
+        for(int i = 1; i < index; i++){
+            toDelete = toDelete->next;
+        }
+        toDelete->prev->next = toDelete->next;
+        toDelete->next->prev = toDelete->prev;
+        T data = toDelete->data;
+        delete toDelete;
+        return data;
+    }
+    void PeekAt(int index){
+        if(index == 1)
+            return peek();
+        if(index == actualsize)
+            return peekLast();
+        Node* temp = head;
+        for(int i = 1; i < index; i++){
+            temp = temp->next;
+        }
+        cout << "Element at index " << index << " is: " << temp->data << endl;
     }
 };       

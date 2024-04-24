@@ -21,5 +21,8 @@ int main(){
     list.Modify(10, 1);
     list.add(11, 11);
     list.printData();  
-   
+   list.peekLast();
+   list.GetAt(3);
+   list.printData();
+   cout << list.GetAt(1);
 }
