@@ -64,6 +64,17 @@ void PerformTestsLQ(){
     end = std::chrono::high_resolution_clock::now();
     elapsed = end - start;
     std::cout << "Average time taken by function(Peek): " << elapsed.count()  << " nanoseconds" << std::endl;
+    start = std::chrono::high_resolution_clock::now();
+            list->ModifyFirst(6391,500);
+    end = std::chrono::high_resolution_clock::now();
+    elapsed = end - start;
+        std::cout << "Average time taken by function(ModifyFirst): " << elapsed.count()  << " nanoseconds" << std::endl;
+        start = std::chrono::high_resolution_clock::now();
+                list->Modify(6391,500);
+        end = std::chrono::high_resolution_clock::now();
+        elapsed = end - start;
+            std::cout << "Average time taken by function(Modify): " << elapsed.count()  << " nanoseconds" << std::endl;
+
     delete list;
     }
 }
@@ -96,7 +107,18 @@ void PerformTestsBQ()
     end = std::chrono::high_resolution_clock::now();
     elapsed = end - start;
     std::cout << "Average time taken by function(Peek): " << elapsed.count()  << " nanoseconds" << std::endl;
-
+        start = std::chrono::high_resolution_clock::now();
+            binary->ModifyFirst(6391,500);
+    end = std::chrono::high_resolution_clock::now();
+    elapsed = end - start;
+        std::cout << "Average time taken by function(ModifyFirst): " << elapsed.count()  << " nanoseconds" << std::endl;
+        start = std::chrono::high_resolution_clock::now();
+                binary->Modify(6391,500);
+        end = std::chrono::high_resolution_clock::now();
+        elapsed = end - start;
+        std::cout << "Average time taken by function(Modify): " << elapsed.count()  << " nanoseconds" << std::endl;
+        delete binary;
     }
 }
 
+//6391
