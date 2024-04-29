@@ -1,5 +1,6 @@
 #include<iostream>
 #include"Queue.hpp"
+#pragma once
 using namespace std;
 
 
@@ -18,14 +19,6 @@ class ListQueue : public Queue<T>
         Node* head;
         Node* tail;
         int actualsize;
-        void repair(){
-            Node* node = head;
-            while(node->next != nullptr && node->priority >= node->next->priority){
-                swap(node->data, node->next->data);
-                swap(node->priority, node->next->priority);
-                node = node->next;
-            }
-        }
         void PushToBack(Node* start){
             Node* node = start;
             while(node->next != nullptr && node->priority >= node->next->priority){
@@ -62,7 +55,7 @@ class ListQueue : public Queue<T>
             head->prev = node;
             head = node;
         }
-        repair();
+        PushToBack(head);
         actualsize++;
     }
     virtual T getHighest() override{
@@ -99,14 +92,14 @@ class ListQueue : public Queue<T>
         }
         cout << endl;
     }
-    virtual void ReadFile(string filename) override{
+    virtual void ReadFile(string filename,int size) override{
         ifstream file;
         file.open(filename);
         if(!file.is_open())
             throw runtime_error("File not found");
         T data;
         int priority;
-        while(file >> data >> priority)
+        while(file >> data >> priority && this->actualsize < size)
             add(data, priority);
         file.close();
     }

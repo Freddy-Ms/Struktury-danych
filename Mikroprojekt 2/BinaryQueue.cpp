@@ -1,5 +1,6 @@
 #include <iostream>
 #include<fstream>
+#pragma once
 #include "Queue.hpp"
 
 using namespace std;
@@ -91,13 +92,13 @@ class BinaryHeap : public Queue<T>
             cout << HeapArr[i].priority << " ";
         cout << endl;
     }
-    virtual void ReadFile(string filename){
+    virtual void ReadFile(string filename, int size){
         ifstream file;
         file.open(filename);
         if(!file.is_open()) throw "File not found";
         T data;
         int priority;
-        while(file >> data >> priority)
+        while(file >> data >> priority && this->actualsize < size)
             add(data, priority);
         file.close();
     }
