@@ -7,36 +7,35 @@ using namespace std;
 template <typename T>
 class ListQueue : public Queue<T>
 {
-    private:
-        struct Node
-        {
-            T data;
-            int priority;
-            Node* next;
-            Node* prev;
-            Node(T data, int priority, Node* next = nullptr, Node* prev = nullptr) : data(data), priority(priority), next(next), prev(prev) {}
-        };
-        Node* head;
-        Node* tail;
-        int actualsize;
-        void PushToBack(Node* start){
-            Node* node = start;
-            while(node->next != nullptr && node->priority >= node->next->priority){
-                swap(node->data, node->next->data);
-                swap(node->priority, node->next->priority);
-                node = node->next;
-            }
+private:
+    struct Node
+    {
+        T data;
+        int priority;
+        Node* next;
+        Node* prev;
+        Node(T data, int priority, Node* next = nullptr, Node* prev = nullptr) : data(data), priority(priority), next(next), prev(prev) {}
+    };
+    Node* head;
+    Node* tail;
+    int actualsize;
+    void PushToBack(Node* start){
+        Node* node = start;
+        while(node->next != nullptr && node->priority >= node->next->priority){
+            swap(node->data, node->next->data);
+            swap(node->priority, node->next->priority);
+            node = node->next;
         }
-        void PushToFront(Node* start){
-            Node* node = start;
-            while(node->prev != nullptr && node->priority < node->prev->priority){
-                swap(node->data, node->prev->data);
-                swap(node->priority, node->prev->priority);
-                node = node->prev;
-            }}
-
-        
-    public:
+    }
+    void PushToFront(Node* start){
+        Node* node = start;
+        while(node->prev != nullptr && node->priority < node->prev->priority){
+            swap(node->data, node->prev->data);
+            swap(node->priority, node->prev->priority);
+            node = node->prev;
+        }
+    }
+public:
     ListQueue() : head(nullptr), tail(nullptr), actualsize(0) {}
     ~ListQueue(){
         while(head != nullptr){
@@ -51,7 +50,6 @@ class ListQueue : public Queue<T>
             head = node;
             tail = node;
         }else{
-            
             head->prev = node;
             head = node;
         }
@@ -115,16 +113,14 @@ class ListQueue : public Queue<T>
                     node->priority = newPriority;
                     Node* temp = node;
                     PushToBack(temp);
-                    }
-                else if(node->priority > newPriority){
+                }else if(node->priority > newPriority){
                     node->priority = newPriority;
                     Node* temp = node;
                     PushToFront(temp);
-               }
                 }
+            }
             node = node->next;
         }
-        
         if(!found)
         cout << "Element not found" << endl;
     }
@@ -136,8 +132,8 @@ class ListQueue : public Queue<T>
                 found = true;
                 if(temp->priority > newPriority){
                     temp->priority = newPriority;
-                    PushToFront(temp);}
-                else{
+                    PushToFront(temp);
+                }else{
                     temp->priority = newPriority;
                     PushToBack(temp);
                 }
@@ -146,7 +142,7 @@ class ListQueue : public Queue<T>
             temp = temp->next;
         }
         if(!found)
-        cout << "Element not found" << endl;
+            cout << "Element not found" << endl;
     }
     T getLast(){
         if(tail == nullptr)

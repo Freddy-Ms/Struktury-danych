@@ -43,7 +43,6 @@ void PerformTestsLQ(){
     end = std::chrono::high_resolution_clock::now();
     elapsed = end - start;
     std::cout << "Average time taken by function(GetHighest): " << elapsed.count()  << " nanoseconds" << std::endl;
-
     start = std::chrono::high_resolution_clock::now();
             list->add(15,1000005);
     end = std::chrono::high_resolution_clock::now();
@@ -68,18 +67,18 @@ void PerformTestsLQ(){
             list->ModifyFirst(6391,500);
     end = std::chrono::high_resolution_clock::now();
     elapsed = end - start;
-        std::cout << "Average time taken by function(ModifyFirst): " << elapsed.count()  << " nanoseconds" << std::endl;
-        start = std::chrono::high_resolution_clock::now();
-                list->Modify(6391,500);
-        end = std::chrono::high_resolution_clock::now();
-        elapsed = end - start;
-            std::cout << "Average time taken by function(Modify): " << elapsed.count()  << " nanoseconds" << std::endl;
+    std::cout << "Average time taken by function(ModifyFirst): " << elapsed.count()  << " nanoseconds" << std::endl;
+    start = std::chrono::high_resolution_clock::now();
+            list->Modify(6391,500);
+    end = std::chrono::high_resolution_clock::now();
+    elapsed = end - start;
+    std::cout << "Average time taken by function(Modify): " << elapsed.count()  << " nanoseconds" << std::endl;
 
     delete list;
     }
 }
-void PerformTestsBQ()
-{
+
+void PerformTestsBQ(){
     for(int i =0 ; i<10;i++){
     BinaryHeap<int>* binary = new BinaryHeap<int>(elements[i]);
     auto start = std::chrono::high_resolution_clock::now();
@@ -111,14 +110,13 @@ void PerformTestsBQ()
             binary->ModifyFirst(6391,500);
     end = std::chrono::high_resolution_clock::now();
     elapsed = end - start;
-        std::cout << "Average time taken by function(ModifyFirst): " << elapsed.count()  << " nanoseconds" << std::endl;
-        start = std::chrono::high_resolution_clock::now();
-                binary->Modify(6391,500);
-        end = std::chrono::high_resolution_clock::now();
-        elapsed = end - start;
-        std::cout << "Average time taken by function(Modify): " << elapsed.count()  << " nanoseconds" << std::endl;
-        delete binary;
+    std::cout << "Average time taken by function(ModifyFirst): " << elapsed.count()  << " nanoseconds" << std::endl;
+    start = std::chrono::high_resolution_clock::now();
+            binary->Modify(6391,500);
+    end = std::chrono::high_resolution_clock::now();
+    elapsed = end - start;
+    std::cout << "Average time taken by function(Modify): " << elapsed.count()  << " nanoseconds" << std::endl;
+    
+    delete binary;
     }
 }
-
-//6391

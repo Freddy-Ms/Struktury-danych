@@ -5,11 +5,10 @@
 
 using namespace std;
 
-
 template <typename T>
 class BinaryHeap : public Queue<T>
 {
-  private:
+private:
     struct Node
     {
         T data;
@@ -18,32 +17,28 @@ class BinaryHeap : public Queue<T>
     Node* HeapArr;
     int capacity;
     int actualsize;
-    void HeapifyUp(int index)
-    {
+    void HeapifyUp(int index){
         int parent = (index - 1) / 2;
         while(index >= 0 && HeapArr[parent].priority > HeapArr[index].priority){
-            {
-                swap(HeapArr[parent], HeapArr[index]);
-                index = parent;
-                parent = (index - 1) / 2;
-            }
+            swap(HeapArr[parent], HeapArr[index]);
+            index = parent;
+            parent = (index - 1) / 2;
         }
     }
-    void HeapifyDown(int index)
-    {
+    void HeapifyDown(int index){
         while(1){
-        int left = 2 * index + 1;
-        int right = 2 * index + 2;
-        int smallest = index;
-        if(left < actualsize && HeapArr[left].priority < HeapArr[index].priority)
-            smallest = left;
-        if(right < actualsize && HeapArr[right].priority < HeapArr[smallest].priority)
-            smallest = right;
-        if(smallest != index)
-        {
-            swap(HeapArr[index], HeapArr[smallest]);
-            index = smallest;
-        }else break;}
+            int left = 2 * index + 1;
+            int right = 2 * index + 2;
+            int smallest = index;
+            if(left < actualsize && HeapArr[left].priority < HeapArr[index].priority)
+                smallest = left;
+            if(right < actualsize && HeapArr[right].priority < HeapArr[smallest].priority)
+                smallest = right;
+            if(smallest != index){
+                swap(HeapArr[index], HeapArr[smallest]);
+                index = smallest;
+            }else break;
+        }
     }
     bool isFull() {
         return actualsize == capacity;}
@@ -57,7 +52,7 @@ class BinaryHeap : public Queue<T>
         HeapArr = temp;
         capacity *= 2;
     }
-    public:
+public:
     BinaryHeap() : BinaryHeap(16){}
     BinaryHeap(int Capacity) : capacity(Capacity), actualsize(0), HeapArr(new Node[Capacity]){}
     ~BinaryHeap(){ delete[] HeapArr; }
@@ -105,29 +100,24 @@ class BinaryHeap : public Queue<T>
     virtual void Modify(T element, int newPriority) override{
         bool found = false;
         for(int i = 0; i < actualsize; i++){
-            if(HeapArr[i].data == element)
-            {
+            if(HeapArr[i].data == element){
                 found = true;
-                if(newPriority > HeapArr[i].priority)
-                {
+                if(newPriority > HeapArr[i].priority){
                     HeapArr[i].priority = newPriority;
                     HeapifyDown(i);
                 }else{
                     HeapArr[i].priority = newPriority;
                     HeapifyUp(i);
                 }
-               
             }
         }
         if(!found)
-        cout << "Element not found" << endl;
+            cout << "Element not found" << endl;
     }
     void ModifyFirst(T element, int newPriority){
         for(int i = 0; i < actualsize; i++){
-            if(HeapArr[i].data == element)
-            {
-                if(newPriority > HeapArr[i].priority)
-                {
+            if(HeapArr[i].data == element){
+                if(newPriority > HeapArr[i].priority){
                     HeapArr[i].priority = newPriority;
                     HeapifyDown(i);
                 }else{

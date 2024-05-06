@@ -22,6 +22,4 @@ class Queue {
     virtual void printData() = 0;
     // Printing our priorities   ->  checking function
     virtual void printPriority() = 0;
-
-
 };
