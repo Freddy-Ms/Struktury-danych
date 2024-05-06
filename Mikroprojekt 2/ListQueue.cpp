@@ -66,6 +66,7 @@ class ListQueue : public Queue<T>
         head = head->next;
         head->prev = nullptr;
         delete temp;
+        actualsize--;
         return data;
     }
     virtual void getSize() override{
@@ -135,10 +136,10 @@ class ListQueue : public Queue<T>
                 found = true;
                 if(temp->priority > newPriority){
                     temp->priority = newPriority;
-                    repairBackward(temp);}
+                    PushToFront(temp);}
                 else{
                     temp->priority = newPriority;
-                    repairForward(temp);
+                    PushToBack(temp);
                 }
                 return;
             }
@@ -155,6 +156,7 @@ class ListQueue : public Queue<T>
         tail->next = nullptr;
         T data = temp->data;
         delete temp;
+        actualsize--;
         return data;
     }
     void peekLast(){
@@ -175,6 +177,7 @@ class ListQueue : public Queue<T>
         toDelete->next->prev = toDelete->prev;
         T data = toDelete->data;
         delete toDelete;
+        actualsize--;
         return data;
     }
     void PeekAt(int index){
