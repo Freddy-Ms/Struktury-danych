@@ -1,5 +1,5 @@
 #include <iostream>
-#include<fstream>
+#include <fstream>
 #pragma once
 #include "Queue.hpp"
 
@@ -40,11 +40,11 @@ private:
             }else break;
         }
     }
-    bool isFull() {
+    bool IsFull() {
         return actualsize == capacity;}
-    bool isEmpty() {
+    bool IsEmpty() {
         return actualsize == 0;}
-    void resize(){
+    void Resize(){
         Node* temp = new Node[capacity * 2];
         for(int i = 0; i < capacity; i++)
             temp[i] = HeapArr[i];
@@ -55,34 +55,36 @@ private:
 public:
     BinaryHeap() : BinaryHeap(16){}
     BinaryHeap(int Capacity) : capacity(Capacity), actualsize(0), HeapArr(new Node[Capacity]){}
-    ~BinaryHeap(){ delete[] HeapArr; }
-    virtual void add(T element, int priority) override{
-        if(isFull()) resize();
+    ~BinaryHeap(){ 
+        delete[] HeapArr; 
+    }
+    virtual void Add(T element, int priority) override{
+        if(IsFull()) Resize();
         HeapArr[actualsize]= {element, priority};
         HeapifyUp(actualsize);
         actualsize++;
     }
-    virtual T getHighest() override{
-        if(isEmpty()) throw "Queue is empty";
+    virtual T GetHighest() override{
+        if(IsEmpty()) throw "Queue is empty";
         T temp = HeapArr[0].data;
         HeapArr[0] = HeapArr[actualsize - 1];
         actualsize--;
         HeapifyDown(0);
         return temp;
     }
-    virtual void getSize() override{
+    virtual void GetSize() override{
         cout << "Size of our queue is: " << actualsize << endl;
     }
-    virtual void peek() override{
-        if(isEmpty()) throw "Queue is empty";
+    virtual void Peek() override{
+        if(IsEmpty()) throw "Queue is empty";
         cout << "First element in our queue is: " << HeapArr[0].data << endl;
     }
-    virtual void printData() override{
+    virtual void PrintData() override{
         for(int i = 0; i < actualsize; i++)
             cout << HeapArr[i].data << " ";
         cout << endl;
     }
-    virtual void printPriority() override{
+    virtual void PrintPriority() override{
         for(int i = 0; i < actualsize; i++)
             cout << HeapArr[i].priority << " ";
         cout << endl;
@@ -94,19 +96,19 @@ public:
         T data;
         int priority;
         while(file >> data >> priority && this->actualsize < size)
-            add(data, priority);
+            Add(data, priority);
         file.close();
     }
     virtual void Modify(T element, int newPriority) override{
         bool found = false;
-        for(int i = 0; i < actualsize; i++){
-            if(HeapArr[i].data == element){
+        for(int i = 0; i < actualsize; i++){ // search for element
+            if(HeapArr[i].data == element){ // if element is found
                 found = true;
-                if(newPriority > HeapArr[i].priority){
-                    HeapArr[i].priority = newPriority;
+                if(newPriority > HeapArr[i].priority){ // if new priority is higher than current
+                    HeapArr[i].priority = newPriority; // change priority
                     HeapifyDown(i);
                 }else{
-                    HeapArr[i].priority = newPriority;
+                    HeapArr[i].priority = newPriority; 
                     HeapifyUp(i);
                 }
             }

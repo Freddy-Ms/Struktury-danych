@@ -1,5 +1,5 @@
-#include<iostream>
-#include"Queue.hpp"
+#include <iostream>
+#include "Queue.hpp"
 #pragma once
 using namespace std;
 
@@ -8,8 +8,7 @@ template <typename T>
 class ListQueue : public Queue<T>
 {
 private:
-    struct Node
-    {
+    struct Node{
         T data;
         int priority;
         Node* next;
@@ -44,7 +43,7 @@ public:
             delete temp;
         }
     }
-    virtual void add(T element, int priority) override{
+    virtual void Add(T element, int priority) override{
         Node* node = new Node(element, priority,head,nullptr);
         if(head == nullptr){
             head = node;
@@ -56,7 +55,7 @@ public:
         PushToBack(head);
         actualsize++;
     }
-    virtual T getHighest() override{
+    virtual T GetHighest() override{
         if(head == nullptr)
             throw runtime_error("Queue is empty");
         Node* temp = head;
@@ -67,15 +66,15 @@ public:
         actualsize--;
         return data;
     }
-    virtual void getSize() override{
+    virtual void GetSize() override{
         cout << "Size of our queue is: " << actualsize << endl;
     }
-    virtual void peek() override{
+    virtual void Peek() override{
         if(head == nullptr)
             throw runtime_error("Queue is empty");
         cout << "First element in our queue is: " << head->data << endl;
     }
-    virtual void printData() override{
+    virtual void PrintData() override{
         Node* temp = head;
         while(temp != nullptr){
             cout << temp->data << " ";
@@ -83,7 +82,7 @@ public:
         }
         cout << endl;
     }
-    virtual void printPriority() override{
+    virtual void PrintPriority() override{
         Node* temp = head;
         while(temp != nullptr){
             cout << temp->priority << " ";
@@ -99,11 +98,10 @@ public:
         T data;
         int priority;
         while(file >> data >> priority && this->actualsize < size)
-            add(data, priority);
+            Add(data, priority);
         file.close();
     }
-    virtual void Modify(T element, int newPriority) override
-    {
+    virtual void Modify(T element, int newPriority) override{
         bool found = false;
         Node* node = head;
         while(node != nullptr){
@@ -144,27 +142,27 @@ public:
         if(!found)
             cout << "Element not found" << endl;
     }
-    T getLast(){
+    T GetLast(){
         if(tail == nullptr)
             throw runtime_error("Queue is empty");
         Node* temp = tail;
+        T data = tail->data;
         tail = tail->prev;
         tail->next = nullptr;
-        T data = temp->data;
         delete temp;
         actualsize--;
         return data;
     }
-    void peekLast(){
+    void PeekLast(){
         if(tail == nullptr)
             throw runtime_error("Queue is empty");
         cout << "Last element in our queue is: " << tail->data << endl;
     }
     T GetAt(int index){
         if(index == 1)
-            return getHighest();
+            return GetHighest();
         if(index == actualsize)
-            return getLast();
+            return GetLast();
         Node* toDelete = head; 
         for(int i = 1; i < index; i++){
             toDelete = toDelete->next;
@@ -178,13 +176,12 @@ public:
     }
     void PeekAt(int index){
         if(index == 1)
-            return peek();
+            return Peek();
         if(index == actualsize)
-            return peekLast();
+            return PeekLast();
         Node* temp = head;
-        for(int i = 1; i < index; i++){
+        for(int i = 1; i < index; i++)
             temp = temp->next;
-        }
         cout << "Element at index " << index << " is: " << temp->data << endl;
     }
 };       
