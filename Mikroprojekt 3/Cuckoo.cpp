@@ -5,7 +5,6 @@
 
 template <typename Key, typename Value>
 Cuckoo<Key, Value>::Cuckoo(int capacity) {
-    static_assert(is_same<Key, int>::value || is_same<Key, string>::value, "Key must be int or string");
     this->one_table_capacity = capacity;
     this->capacity = 2*capacity;
     this->size = 0;
