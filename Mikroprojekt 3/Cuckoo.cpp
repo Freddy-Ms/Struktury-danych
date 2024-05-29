@@ -5,8 +5,8 @@
 
 template <typename Key, typename Value>
 Cuckoo<Key, Value>::Cuckoo(int capacity) {
-    this->one_table_capacity = capacity;
-    this->capacity = 2*capacity;
+    this->one_table_capacity = capacity / 2;
+    this->capacity = this->one_table_capacity * 2;
     this->size = 0;
     this->table1 = new Pair[one_table_capacity];
     this->table2 = new Pair[one_table_capacity];
@@ -29,7 +29,7 @@ bool Cuckoo<Key, Value>::isFull() {
     return this->size == this->capacity;
 }
 template <typename Key, typename Value>
-int Cuckoo<Key, Value>::hash1(Key key) {
+size_t Cuckoo<Key, Value>::hash1(Key key) {
     if(is_same<Key, int>::value) {
         key = ((key >> 16) ^ key) * 0x45d9f3b;
         key = ((key >> 16) ^ key) * 0x45d9f3b;
@@ -42,7 +42,7 @@ int Cuckoo<Key, Value>::hash1(Key key) {
     }
 }
 template <typename Key, typename Value>
-int Cuckoo<Key, Value>::hash2(Key key) {
+size_t Cuckoo<Key, Value>::hash2(Key key) {
     if(is_same<Key, int>::value) {
         return ((key * 2654435761) >> (32 - 16)) % this->one_table_capacity;      
     }
