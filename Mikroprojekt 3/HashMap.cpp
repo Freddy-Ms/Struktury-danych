@@ -29,7 +29,7 @@ size_t HashMap<Key, Value>::hash(Key key) {
 }
 
 template <typename Key, typename Value>
-void HashMap<Key, Value>::insert(Key key, Value value) {
+void HashMap<Key, Value>::insert(const Key& key,const  Value& value) {
     this->isFull();
     size_t index = this->hash(key);
     while (this->table[index].occupied) {
@@ -40,7 +40,7 @@ void HashMap<Key, Value>::insert(Key key, Value value) {
 }
 
 template <typename Key, typename Value>
-void HashMap<Key, Value>::remove(Key key) {
+void HashMap<Key, Value>::remove(const Key& key) {
     size_t index = this->hash(key);
     while (this->table[index].key != key) {
         index = (index + 1) % this->capacity;
@@ -50,7 +50,7 @@ void HashMap<Key, Value>::remove(Key key) {
 }
 
 template <typename Key, typename Value>
-Value HashMap<Key, Value>::get(Key key) {
+Value HashMap<Key, Value>::get(const Key& key) {
     size_t index = this->hash(key);
     while (this->table[index].key != key) {
         index = (index + 1) % this->capacity;
@@ -59,7 +59,7 @@ Value HashMap<Key, Value>::get(Key key) {
 }
 
 template <typename Key, typename Value>
-bool HashMap<Key, Value>::search(Key key) {
+bool HashMap<Key, Value>::search(const Key& key) {
     size_t index = this->hash(key);
     size_t iterations = 0;
     while (this->table[index].key != key && iterations < this->capacity) {

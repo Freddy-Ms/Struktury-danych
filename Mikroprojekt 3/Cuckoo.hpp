@@ -20,9 +20,9 @@ private:
 public:
     Cuckoo(int capacity); // Constructor
     ~Cuckoo(); // Destructor
-    void insert(Key key, Value value); // Insert a key into the hash tables
-    void remove(Key key); // Remove a key from the hash tables
-    bool search(Key key); // Search a key in the hash tables
+    void insert(const Key& key, const Value& value); // Insert a key into the hash tables
+    void remove(const Key& key); // Remove a key from the hash tables
+    bool search(const Key& key); // Search a key in the hash tables
     void display(); // Display the hash tables
-    Value get(Key key); // Get the value of a key
+    Value get(const Key& key); // Get the value of a key
 };

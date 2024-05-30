@@ -18,10 +18,10 @@ private:
 public:
     HashMap(size_t capacity);
     ~HashMap();
-    void insert(Key key, Value value);
-    void remove(Key key);
-    Value get(Key key);
-    bool search(Key key);
+    void insert(const Key& key, const Value& value);
+    void remove(const Key& key);
+    Value get(const Key& key);
+    bool search(const Key& key);
     void print();
 
 };

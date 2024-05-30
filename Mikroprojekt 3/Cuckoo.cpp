@@ -84,7 +84,7 @@ void Cuckoo<Key, Value>::rehash() {
     delete[] temp4;
 }
 template <typename Key, typename Value>
-void Cuckoo<Key, Value>::insert(Key key, Value value) {
+void Cuckoo<Key, Value>::insert(const Key& key, const Value& value) {
     if (this->isFull()) {
         this->rehash();
     }
@@ -136,7 +136,7 @@ void Cuckoo<Key, Value>::insert(Key key, Value value) {
 }
 
 template <typename Key, typename Value>
-void Cuckoo<Key, Value>::remove(Key key) {
+void Cuckoo<Key, Value>::remove(const Key& key) {
     int index1 = this->hash1(key);
     int index2 = this->hash2(key);
     if (this->occupied1[index1] && this->table1[index1].first == key) {
@@ -149,7 +149,7 @@ void Cuckoo<Key, Value>::remove(Key key) {
     }
 }
 template <typename Key, typename Value>
-bool Cuckoo<Key, Value>::search(Key key) {
+bool Cuckoo<Key, Value>::search(const Key& key) {
     int index1 = this->hash1(key);
     int index2 = this->hash2(key);
     return (this->occupied1[index1] && this->table1[index1].first == key) || (this->occupied2[index2] && this->table2[index2].first == key);
@@ -170,7 +170,7 @@ void Cuckoo<Key, Value>::display() {
     }
 }
 template <typename Key, typename Value>
-Value Cuckoo<Key, Value>::get(Key key){
+Value Cuckoo<Key, Value>::get(const Key& key){
     size_t index1 = hash1(key);
     size_t index2 = hash2(key);
     if (occupied1[index1] && table1[index1].first == key) {

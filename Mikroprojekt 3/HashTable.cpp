@@ -30,7 +30,7 @@ size_t HashTable<Key, Value>::hash(Key key) {
     }
 }
 template <typename Key, typename Value>
-void HashTable<Key, Value>::insert(Key key, Value value) {
+void HashTable<Key, Value>::insert(const Key& key, const Value& value) {
     if(this->search(key)) {
         cout << "Key already exists" << endl;
         return;
@@ -39,7 +39,7 @@ void HashTable<Key, Value>::insert(Key key, Value value) {
     this->table[index]->emplace_back(key, value);
 }
 template <typename Key, typename Value>
-void HashTable<Key, Value>::remove(Key key) {
+void HashTable<Key, Value>::remove(const Key& key) {
     size_t index = hash(key);
     for (auto it = this->table[index]->begin(); it != this->table[index]->end(); it++) {
         if (it->first == key) {
@@ -49,7 +49,7 @@ void HashTable<Key, Value>::remove(Key key) {
     }
 }
 template <typename Key, typename Value>
-bool HashTable<Key, Value>::search(Key key) {
+bool HashTable<Key, Value>::search(const Key& key) {
     size_t index = hash(key);
     for (auto it = this->table[index]->begin(); it != this->table[index]->end(); it++) {
         if (it->first == key) {
@@ -68,7 +68,7 @@ void HashTable<Key, Value>::display() {
     }
 }
 template <typename Key, typename Value>
-Value HashTable<Key, Value>::get(Key key) {
+Value HashTable<Key, Value>::get(const Key& key) {
     size_t index = hash(key);
     for (auto it = this->table[index]->begin(); it != this->table[index]->end(); it++) {
         if (it->first == key) {
