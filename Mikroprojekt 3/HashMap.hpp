@@ -1,6 +1,7 @@
-#pragma once
 #include <iostream>
+#pragma once
 using namespace std;
+
 template <typename Key, typename Value>
 class HashMap {
 private:
@@ -23,5 +24,4 @@ public:
     Value get(const Key& key);
     bool search(const Key& key);
     void print();
-
 };

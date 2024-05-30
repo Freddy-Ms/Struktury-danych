@@ -35,21 +35,19 @@ size_t Cuckoo<Key, Value>::hash1(Key key) {
         key = ((key >> 16) ^ key) * 0x45d9f3b;
         key = (key >> 16) ^ key;
         return key % this->one_table_capacity;
-    }
-    else {
+    } else {
         hash<Key> hashfunc;
         return hashfunc(key) % this->one_table_capacity;
     }
 }
 template <typename Key, typename Value>
 size_t Cuckoo<Key, Value>::hash2(Key key) {
-    if(is_same<Key, int>::value) {
+    if(is_same<Key, int>::value) 
         return ((key * 2654435761) >> (32 - 16)) % this->one_table_capacity;      
-    }
     else {
         hash<Key> hashfunc;
         return (((hashfunc(key)*510) % this->one_table_capacity) * 255) % this->one_table_capacity;
-  }
+    }
 }
 template <typename Key, typename Value>
 void Cuckoo<Key, Value>::rehash() {
@@ -71,12 +69,10 @@ void Cuckoo<Key, Value>::rehash() {
         this->occupied2[i] = false;
     }
     for (int i = 0; i < temp_one_capacity; i++) {
-        if (temp3[i]) {
+        if (temp3[i]) 
             this->insert(temp1[i].first, temp1[i].second);
-        }
-        if (temp4[i]) {
+        if (temp4[i]) 
             this->insert(temp2[i].first, temp2[i].second);
-        }
     }
     delete[] temp1;
     delete[] temp2;
@@ -85,9 +81,8 @@ void Cuckoo<Key, Value>::rehash() {
 }
 template <typename Key, typename Value>
 void Cuckoo<Key, Value>::insert(const Key& key, const Value& value) {
-    if (this->isFull()) {
+    if (this->isFull())
         this->rehash();
-    }
     int index1 = this->hash1(key);
     int index2 = this->hash2(key);
     if (!this->occupied1[index1]) {
@@ -102,7 +97,6 @@ void Cuckoo<Key, Value>::insert(const Key& key, const Value& value) {
         this->size++;
         return;
     }
-    
     Pair temp = make_pair(key, value);
     int currentTable = 1;
     int iterations = 0;
@@ -134,7 +128,6 @@ void Cuckoo<Key, Value>::insert(const Key& key, const Value& value) {
     this->rehash();
     this->insert(temp.first, temp.second);
 }
-
 template <typename Key, typename Value>
 void Cuckoo<Key, Value>::remove(const Key& key) {
     int index1 = this->hash1(key);
@@ -157,27 +150,21 @@ bool Cuckoo<Key, Value>::search(const Key& key) {
 template <typename Key, typename Value>
 void Cuckoo<Key, Value>::display() {
     cout << "Table 1:" << endl;
-    for (int i = 0; i < this->capacity / 2; i++) {
-        if (this->occupied1[i]) {
+    for (int i = 0; i < this->capacity / 2; i++) 
+        if (this->occupied1[i]) 
             cout << this->table1[i].first << " " << this->table1[i].second << endl;
-        }
-    }
     cout << "Table 2:" << endl;
-    for (int i = 0; i < this->capacity / 2; i++) {
-        if (this->occupied2[i]) {
+    for (int i = 0; i < this->capacity / 2; i++) 
+        if (this->occupied2[i]) 
             cout << this->table2[i].first << " " << this->table2[i].second << endl;
-        }
-    }
 }
 template <typename Key, typename Value>
 Value Cuckoo<Key, Value>::get(const Key& key){
     size_t index1 = hash1(key);
     size_t index2 = hash2(key);
-    if (occupied1[index1] && table1[index1].first == key) {
+    if (occupied1[index1] && table1[index1].first == key)
         return table1[index1].second;
-    }
-    if (occupied2[index2] && table2[index2].first == key) {
+    if (occupied2[index2] && table2[index2].first == key) 
         return table2[index2].second;
-    }
     return Value();
 }

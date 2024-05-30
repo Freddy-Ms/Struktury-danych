@@ -2,6 +2,7 @@
 #include<list>
 #pragma once 
 using namespace std;
+
 template <typename Key, typename Value>
 class HashTable{
 private:
