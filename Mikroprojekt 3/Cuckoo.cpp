@@ -169,3 +169,15 @@ void Cuckoo<Key, Value>::display() {
         }
     }
 }
+template <typename Key, typename Value>
+Value Cuckoo<Key, Value>::get(Key key){
+    size_t index1 = hash1(key);
+    size_t index2 = hash2(key);
+    if (occupied1[index1] && table1[index1].first == key) {
+        return table1[index1].second;
+    }
+    if (occupied2[index2] && table2[index2].first == key) {
+        return table2[index2].second;
+    }
+    return Value();
+}

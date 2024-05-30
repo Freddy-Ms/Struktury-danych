@@ -24,4 +24,5 @@ public:
     void remove(Key key); // Remove a key from the hash tables
     bool search(Key key); // Search a key in the hash tables
     void display(); // Display the hash tables
+    Value get(Key key); // Get the value of a key
 };

@@ -18,4 +18,5 @@ public:
     void display(); // Display the hash table
     Value get(Key key); // Get the value of a key
     size_t get_size() { return this->size; }
+    size_t get_size_of_bucket(size_t index) { return this->table[index]->size(); }
 };
