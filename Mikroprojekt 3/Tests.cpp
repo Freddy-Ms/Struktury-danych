@@ -17,7 +17,7 @@ void generateRandomData() {
     std::mt19937 gen(rd()); 
     std::uniform_int_distribution<> dis(1, 1000000000); 
 
-    while (uniqueKeys.size() < 1000000) {
+    while (uniqueKeys.size() < 1000001) {
         int key = dis(gen);
         int value = dis(gen);
 
