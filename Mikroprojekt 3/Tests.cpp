@@ -2,19 +2,32 @@
 #include "HashMap.cpp"
 #include "HashTable.cpp"
 #include <fstream>
+#include <unordered_set>
 #include <random>
 #include <chrono>
 
 
 const int size[] = {100, 1000, 10000, 100000, 200000, 500000, 1000000};
-void generateRandomData(){
-    ofstream file;
+void generateRandomData() {
+    std::ofstream file;
     file.open("data.txt");
-    for(int i = 0; i < 1000000; i++) {
-        file << rand() << " " << rand() << endl;
-    }
-    file.close();
 
+    std::unordered_set<int> uniqueKeys;
+    std::random_device rd;  
+    std::mt19937 gen(rd()); 
+    std::uniform_int_distribution<> dis(1, 1000000000); 
+
+    while (uniqueKeys.size() < 1000000) {
+        int key = dis(gen);
+        int value = dis(gen);
+
+        if (uniqueKeys.find(key) == uniqueKeys.end()) {
+            uniqueKeys.insert(key);
+            file << key << " " << value << std::endl;
+        }
+    }
+
+    file.close();
 }
 void TestWithHalfCapacity() {
     for(int i = 0; i < 7; i++) {
@@ -183,7 +196,6 @@ void TestWithHalfCapacityRANDOM()
         file >> key >> value;
         hashTable->insert(key,value);
     }
-    file.seekg(0, ios::beg);
     End = std::chrono::high_resolution_clock::now();
     Elapsed = std::chrono::duration_cast<std::chrono::microseconds>(End - Start);
     cout << "Time taken by Hash Table with capacity(loading all data avg): " << size[i] << " with half size:" << Elapsed.count() / (size[i] / 2) << " microseconds" << endl; // no conflict

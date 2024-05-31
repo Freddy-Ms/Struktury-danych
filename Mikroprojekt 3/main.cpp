@@ -6,5 +6,7 @@ int main()
 {
    //TestWithHalfCapacity();
    //TestWithFullCapacity();
-   generateRandomData();
+   //generateRandomData();
+   TestWithHalfCapacityRANDOM();
+   //TestWithFullCapacityRANDOM();
 }
