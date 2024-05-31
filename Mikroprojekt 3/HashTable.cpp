@@ -1,6 +1,6 @@
 #include "HashTable.hpp"
 #include<iostream>
-
+#pragma once
 template <typename Key, typename Value>
 HashTable<Key, Value>::HashTable(size_t size) {
     this->size = size;

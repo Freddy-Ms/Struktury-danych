@@ -42,8 +42,9 @@ size_t Cuckoo<Key, Value>::hash1(Key key) {
 }
 template <typename Key, typename Value>
 size_t Cuckoo<Key, Value>::hash2(Key key) {
-    if(is_same<Key, int>::value) 
-        return ((key * 2654435761) >> (32 - 16)) % this->one_table_capacity;      
+    if(is_same<Key, int>::value) {
+    return ((key * 2654435761) >> (32 - 16)) % this->one_table_capacity;      
+    }
     else {
         hash<Key> hashfunc;
         return (((hashfunc(key)*510) % this->one_table_capacity) * 255) % this->one_table_capacity;
