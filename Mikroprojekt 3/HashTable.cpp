@@ -47,9 +47,11 @@ void HashTable<Key, Value>::remove(const Key& key) {
 template <typename Key, typename Value>
 bool HashTable<Key, Value>::search(const Key& key) {
     size_t index = hash(key);
-    for (auto it = this->table[index]->begin(); it != this->table[index]->end(); it++) 
+    for (auto it = this->table[index]->begin(); it != this->table[index]->end(); it++) {
         if (it->first == key)
             return true;
+    }
+    return false;
 }
 template <typename Key, typename Value>
 void HashTable<Key, Value>::display() {
