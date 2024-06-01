@@ -28,10 +28,6 @@ size_t HashTable<Key, Value>::hash(Key key) {
 }
 template <typename Key, typename Value>
 void HashTable<Key, Value>::insert(const Key& key, const Value& value) {
-    if(this->search(key)) {
-        cout << "Key already exists" << endl;
-        return;
-    }
     size_t index = hash(key);
     this->table[index]->emplace_back(key, value);
 }
