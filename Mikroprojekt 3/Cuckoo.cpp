@@ -17,6 +17,7 @@ Cuckoo<Key, Value>::Cuckoo(int capacity) {
         this->occupied2[i] = false;
     }
 }
+
 template <typename Key, typename Value>
 Cuckoo<Key, Value>::~Cuckoo() {
     delete[] this->table1;
@@ -24,6 +25,7 @@ Cuckoo<Key, Value>::~Cuckoo() {
     delete[] this->occupied1;
     delete[] this->occupied2;
 }
+
 template <typename Key, typename Value>
 bool Cuckoo<Key, Value>::isFull() {
     return this->size == this->capacity;
@@ -40,6 +42,7 @@ size_t Cuckoo<Key, Value>::hash1(Key key) {
         return hashfunc(key) % this->one_table_capacity;
     }
 }
+
 template <typename Key, typename Value>
 size_t Cuckoo<Key, Value>::hash2(Key key) {
     if(is_same<Key, int>::value) {
@@ -50,6 +53,7 @@ size_t Cuckoo<Key, Value>::hash2(Key key) {
         return (((hashfunc(key)*510) % this->one_table_capacity) * 255) % this->one_table_capacity;
     }
 }
+
 template <typename Key, typename Value>
 void Cuckoo<Key, Value>::rehash() {
     Pair* temp1 = this->table1;
@@ -80,6 +84,7 @@ void Cuckoo<Key, Value>::rehash() {
     delete[] temp3;
     delete[] temp4;
 }
+
 template <typename Key, typename Value>
 void Cuckoo<Key, Value>::insert(const Key& key, const Value& value) {
     if (this->isFull())
@@ -129,6 +134,7 @@ void Cuckoo<Key, Value>::insert(const Key& key, const Value& value) {
     this->rehash();
     this->insert(temp.first, temp.second);
 }
+
 template <typename Key, typename Value>
 void Cuckoo<Key, Value>::remove(const Key& key) {
     int index1 = this->hash1(key);
@@ -142,12 +148,14 @@ void Cuckoo<Key, Value>::remove(const Key& key) {
         this->size--;
     }
 }
+
 template <typename Key, typename Value>
 bool Cuckoo<Key, Value>::search(const Key& key) {
     int index1 = this->hash1(key);
     int index2 = this->hash2(key);
     return (this->occupied1[index1] && this->table1[index1].first == key) || (this->occupied2[index2] && this->table2[index2].first == key);
 }
+
 template <typename Key, typename Value>
 void Cuckoo<Key, Value>::display() {
     cout << "Table 1:" << endl;
@@ -159,6 +167,7 @@ void Cuckoo<Key, Value>::display() {
         if (this->occupied2[i]) 
             cout << this->table2[i].first << " " << this->table2[i].second << endl;
 }
+
 template <typename Key, typename Value>
 Value Cuckoo<Key, Value>::get(const Key& key){
     size_t index1 = hash1(key);
