@@ -4,9 +4,9 @@
 #include"Tests.cpp"
 int main()
 {
-   //TestWithHalfCapacity();
+  // TestWithHalfCapacity();
    //TestWithFullCapacity();
-   generateRandomData();
-  // TestWithHalfCapacityRANDOM();
-   //TestWithFullCapacityRANDOM();
+   //generateRandomData();
+   //TestWithHalfCapacityRANDOM();
+   TestWithFullCapacityRANDOM();
 }

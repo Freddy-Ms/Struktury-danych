@@ -37,8 +37,13 @@ void HashMap<Key, Value>::insert(const Key& key,const  Value& value) {
 template <typename Key, typename Value>
 void HashMap<Key, Value>::remove(const Key& key) {
     size_t index = this->hash(key);
-    while (this->table[index].key != key) 
+    int iterations = 0;
+    while (this->table[index].key != key && iterations < this->capacity) {
         index = (index + 1) % this->capacity;
+        iterations++;
+    }
+    if(iterations == this->capacity)
+        return;
     this->table[index].occupied = false;
     this->size--;
 }
