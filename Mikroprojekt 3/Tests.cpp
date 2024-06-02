@@ -61,17 +61,17 @@ void TestWithHalfCapacity() {
     cout << "Hash Table (loading all data avg): " << sizes[i] << "\t" << Elapsed.count() / (sizes[i] / 2) << " ns" << endl; // no conflict
     cout << "Hash Table (loading all data): " << sizes[i] << "\t" << Elapsed.count() << " ns" << endl; // no conflict
     Start = std::chrono::high_resolution_clock::now();
-    cuckoo->insert(sizes[i]/2,sizes[i]/2+1);
+    cuckoo->insert(sizes[i]/2,sizes[i]/2);
     End = std::chrono::high_resolution_clock::now();
     Elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(End - Start);
     cout << "Cuckoo Hashing (insert): " << sizes[i] << "\t" << Elapsed.count() << " ns" << endl; // no conflict
     Start = std::chrono::high_resolution_clock::now();
-    hashMap->insert(sizes[i]/2,sizes[i]/2+1);
+    hashMap->insert(sizes[i]/2,sizes[i]/2);
     End = std::chrono::high_resolution_clock::now();
     Elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(End - Start);
     cout << "Hash Map (insert): " << sizes[i] << "\t" << Elapsed.count() << " ns" << endl; // no conflict
     Start = std::chrono::high_resolution_clock::now();
-    hashTable->insert((sizes[i]/2),sizes[i]/2+1);
+    hashTable->insert((sizes[i]/2),sizes[i]/2);
     End = std::chrono::high_resolution_clock::now();
     Elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(End - Start);
     cout << "Hash Table (insert): " << sizes[i] << "\t" << Elapsed.count() << " ns" << endl; // no conflict
@@ -147,7 +147,6 @@ void TestWithFullCapacity(){
     End = std::chrono::high_resolution_clock::now();
     Elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(End - Start);
     cout << "Cuckoo Hashing (remove): " << sizes[i] << "\t" << Elapsed.count() << " ns" << endl; // no conflict
-
     Start = std::chrono::high_resolution_clock::now();
     hashMap->remove(sizes[i]);
     End = std::chrono::high_resolution_clock::now();
