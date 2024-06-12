@@ -52,6 +52,11 @@ void Graph::addEdge(int V1, int V2, int weight) {
     AdjList[V2].push_back(make_pair(V1, weight));
     this->Edges++;
 }
+void Graph::addEdgeDirectional(int V1, int V2, int weight) {
+    AdjMatrix[V1][V2] = weight;
+    AdjList[V1].push_back(make_pair(V2, weight));
+    this->Edges++;
+}
 void Graph::removeEdge(int V1, int V2) {
     AdjMatrix[V1][V2] = 0;
     AdjMatrix[V2][V1] = 0;
@@ -134,6 +139,72 @@ void Graph::DijkstraWithMatrix(int StartVertex){
     delete[] dist;
     delete[] visited;
 }
+void Graph::FordBellmanList(int StartVertex){
+    int *dist = new int[this->Vertex];
+    for(int i = 0; i<this->Vertex; i++){
+        dist[i] = INT_MAX;
+    }
+    dist[StartVertex] = 0;
+    for(int i = 0; i<this->Vertex-1; i++){
+        for(int j = 0; j<this->Vertex; j++){
+            for(auto k : AdjList[j]){
+                int DestinationVertex = k.first;
+                int weight = k.second;
+                if(dist[j] != INT_MAX && dist[DestinationVertex] > dist[j] + weight){
+                    dist[DestinationVertex] = dist[j] + weight;
+                }
+            }
+        }
+    }
+    for(int i = 0; i<this->Vertex; i++){
+        for(auto j : AdjList[i]){
+            int DestinationVertex = j.first;
+            int weight = j.second;
+            if(dist[i] != INT_MAX && dist[DestinationVertex] > dist[i] + weight){
+                //cout << "Graph contains negative cycle" << endl;
+                delete[] dist;
+                return;
+            }
+        }
+    }
+   // printSolution(dist);
+    delete[] dist;
+}
+void Graph::FordBellmanMatrix(int StartVertex){
+    int *dist = new int[this->Vertex];
+    for(int i = 0; i<this->Vertex; i++){
+        dist[i] = INT_MAX;
+    }
+    dist[StartVertex] = 0;
+    for(int i = 0; i<this->Vertex-1; i++){
+        for(int j = 0; j<this->Vertex; j++){
+            for(int k = 0; k<this->Vertex; k++){
+                if(AdjMatrix[j][k] != 0){
+                    int DestinationVertex = k;
+                    int weight = AdjMatrix[j][k];
+                    if(dist[j] != INT_MAX && dist[DestinationVertex] > dist[j] + weight){
+                        dist[DestinationVertex] = dist[j] + weight;
+                    }
+                }
+            }
+        }
+    }
+    for(int i = 0; i<this->Vertex; i++){
+        for(int j = 0; j<this->Vertex; j++){
+            if(AdjMatrix[i][j] != 0){
+                int DestinationVertex = j;
+                int weight = AdjMatrix[i][j];
+                if(dist[i] != INT_MAX && dist[DestinationVertex] > dist[i] + weight){
+                   // cout << "Graph contains negative cycle" << endl;
+                    delete[] dist;
+                    return;
+                }
+            }
+        }
+    }
+    //printSolution(dist);
+    delete[] dist;
+}
 void Graph::printSolution(int *dist){
     cout << "Vertex \t Distance from Source Vertex" << endl;
     for(int i = 0; i<this->Vertex; i++){
@@ -210,6 +281,61 @@ void Graph::generateGraph(int density){
 
         addEdge(u, v, rand() % 100 + 1);
         usedEdges.insert(make_pair(min(u, v), max(u, v))); // Track the added edge
+        edgesToAdd--;
+        edgeIndex++;
+    }
+}
+void Graph::generateGraphDirectional(int density)
+{
+    vector<pair<int, int>> allEdges;
+    set<pair<int, int>> usedEdges;
+    random_device rd;
+    default_random_engine rng(rd());
+    FullfilZerosMatrix();
+    ClearAdjList();
+    this->Edges = 0;
+    // Generate all possible edges for an undirected graph
+    for (int u = 0; u < this->Vertex; ++u) {
+        for (int v = 0; v < this->Vertex; ++v) {
+            if (u != v) {
+                allEdges.push_back(make_pair(u, v));
+                allEdges.push_back(make_pair(v, u));
+            }
+        }
+    }
+
+    // Shuffle the edges to randomly select the required number of edges
+    shuffle(allEdges.begin(), allEdges.end(), rng);
+
+    // Calculate the exact number of edges based on the density
+    int totalPossibleEdges = allEdges.size();
+    int edgesToAdd = (density * totalPossibleEdges) / 100;
+
+    // Ensure each vertex has at least one edge by creating a minimal spanning tree (or similar structure)
+    for (int i = 0; i < this->Vertex - 1; ++i) {
+        int u = i;
+        int v = i + 1;
+        int weight = rand() % 50  - 10 ; // Random weight 
+        addEdgeDirectional(u, v, weight);
+        usedEdges.insert(make_pair(u, v)); // Track the added edge
+    }
+
+    edgesToAdd -= (this->Vertex - 1);
+
+    // Now add the remaining edges
+    int edgeIndex = 0;
+    while (edgesToAdd > 0 && edgeIndex < totalPossibleEdges) {
+        int u = allEdges[edgeIndex].first;
+        int v = allEdges[edgeIndex].second;
+
+        // Ensure we do not add duplicate edges
+        if (usedEdges.find(make_pair(u, v)) != usedEdges.end()) {
+            edgeIndex++;
+            continue;
+        }
+
+        addEdgeDirectional(u, v, rand() % 100 - 20);
+        usedEdges.insert(make_pair(u, v)); // Track the added edge
         edgesToAdd--;
         edgeIndex++;
     }

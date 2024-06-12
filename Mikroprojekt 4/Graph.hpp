@@ -16,14 +16,18 @@ class Graph {
     public:
         Graph(int Vertex); // Constructor
         void addEdge(int V1, int V2, int weight); // Add edge between two vertices
+        void addEdgeDirectional(int V1, int V2, int weight); // Add directional edge between two vertices
         void removeEdge(int V1, int V2); // Remove edge between two vertices
         void DijkstraWithMatrix(int StartVertex); // Dijkstra algorithm with Adjacency Matrix
         void DijkstraWithList(int StartVertex); // Dijkstra algorithm with Adjacency List
-        void printSolution(int *dist); // Print the solution of Dijkstra algorithm
+        void FordBellmanMatrix(int StartVertex); // Ford-Bellman algorithm
+        void FordBellmanList(int StartVertex); // Ford-Bellman algorithm
+        void printSolution(int *dist); // Print the solution of Dijkstra or Ford-Bellman algorithm
         void printMatrix(); // Print Adjacency Matrix
         void printList(); // Print Adjacency List
         int getVertex(); // Get number of vertices
         int getEdges(); // Get number of edges
         void generateGraph(int density); // Generate random graph
+        void generateGraphDirectional(int density); // Generate random directional graph            
         ~Graph(); // Destructor
 };
